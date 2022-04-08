@@ -1,0 +1,22 @@
+server:
+  port: 7777
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/atm
+    username: postgres
+    password: 1234
+
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+jwt:
+  secret: lkerjnlkrjlirwjlwjwijl854044509048094i4ggggggggggddddddddddo4mwkmlwkmwmtwemljwljrl482985958jisjfiesj84830
+  token:
+    validity: 500000
