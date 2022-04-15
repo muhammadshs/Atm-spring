@@ -2,15 +2,14 @@ package com.dwteam.atm.user;
 
 import com.dwteam.atm.account.AccountEntity;
 import com.dwteam.atm.base.BaseEntity;
+import com.dwteam.atm.security.RoleTypeEnum;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_user")
@@ -32,5 +31,7 @@ public class UserEntity extends BaseEntity {
     @Column(name = "display_name")
     private String displayName;
 
-
+    @Column(columnDefinition = "varchar(255) default 'User'")
+    @Enumerated(EnumType.STRING)
+    private RoleTypeEnum role;
 }

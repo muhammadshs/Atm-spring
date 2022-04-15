@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface UserRepository extends PagingAndSortingRepository<UserEntity,Long> {
     Optional<UserEntity> findByUserNameAndPassWord(String userName,String passWord);
     boolean existsByUserNameAndPassWord(String userName,String passWord);
+    boolean existsByUserName(String userName);
 }

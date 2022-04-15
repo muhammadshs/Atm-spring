@@ -14,6 +14,5 @@ public class AccountDTO {
     @NotNull
     private Double amount;
 
-    @NotNull
-    private UserDTO user;
+
 }

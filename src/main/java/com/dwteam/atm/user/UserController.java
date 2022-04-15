@@ -25,5 +25,9 @@ public class UserController {
         TokenDTO tokenDto=userService.login(login.getUserName(),login.getPassWord());
         return ResponseEntity.ok(tokenDto);
     }
-
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Void> delete(@RequestParam String userId){
+            userService.delete(Long.parseLong(userId));
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

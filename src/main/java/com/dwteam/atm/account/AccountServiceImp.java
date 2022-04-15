@@ -2,6 +2,8 @@ package com.dwteam.atm.account;
 
 import com.dwteam.atm.exception.NotFindException;
 import com.dwteam.atm.security.TokenHolderService;
+import com.dwteam.atm.user.UserEntity;
+import com.dwteam.atm.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,15 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AccountServiceImp implements AccountService{
     private AccountRepository accountRepository;
+    private UserRepository userRepository;
     private TokenHolderService tokenHolderService;
     @Override
-    public void save(AccountEntity account) {
+    public void save(AccountEntity account,Long userId) {
+        Optional<UserEntity> op=userRepository.findById(userId);
+        if(op.isEmpty()){
+            throw new NotFindException("you havent user",this.getClass().getName());
+        }
+        account.setUser(op.get());
         accountRepository.save(account);
     }
 
@@ -48,6 +56,7 @@ public class AccountServiceImp implements AccountService{
         AccountEntity account=op.get();
         withdraw(amount);
         account.setAmount(account.getAmount()+amount);
+        accountRepository.save(account);
         return account;
     }
 
@@ -67,6 +76,11 @@ public class AccountServiceImp implements AccountService{
             throw new NotFindException("cant find account with this account number",this.getClass().getName());
         }
         return op.get();
+    }
+
+    @Override
+    public void delete(Long id) {
+        accountRepository.deleteById(id);
     }
 
 }

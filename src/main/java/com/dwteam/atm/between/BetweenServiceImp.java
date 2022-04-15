@@ -7,7 +7,10 @@ import com.dwteam.atm.transaction.TransactionEntity;
 import com.dwteam.atm.transaction.TransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.Transient;
+@Transactional
 @Service
 @AllArgsConstructor
 public class BetweenServiceImp implements BetweenService {
@@ -19,8 +22,7 @@ public class BetweenServiceImp implements BetweenService {
         TransactionEntity transaction=new TransactionEntity();
         transaction.setAmount(amount);
         transaction.setType(TransactionTypeEnum.Withdraw);
-        transaction.setAccount(accountService.getAccount());
-        transactionService.save(transaction);
+        transactionService.saveInThisAccount(transaction);
     }
 
     @Override
@@ -29,8 +31,7 @@ public class BetweenServiceImp implements BetweenService {
         TransactionEntity transaction=new TransactionEntity();
         transaction.setAmount(amount);
         transaction.setType(TransactionTypeEnum.Deposit);
-        transaction.setAccount(accountService.getAccount());
-        transactionService.save(transaction);
+        transactionService.saveInThisAccount(transaction);
     }
 
     @Override
@@ -42,9 +43,9 @@ public class BetweenServiceImp implements BetweenService {
         transaction.setAccount(accountService.getAccount());
         transactionService.save(transaction);
         TransactionEntity transaction2=new TransactionEntity();
-        transaction.setAmount(amount);
-        transaction.setType(TransactionTypeEnum.Deposit);
-        transaction.setAccount(account);
+        transaction2.setAmount(amount);
+        transaction2.setType(TransactionTypeEnum.Deposit);
+        transaction2.setAccount(account);
         transactionService.save(transaction2);
     }
 }

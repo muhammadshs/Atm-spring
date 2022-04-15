@@ -1,5 +1,6 @@
 package com.dwteam.atm.user;
 
+import com.dwteam.atm.exception.DuplicateException;
 import com.dwteam.atm.exception.NotFindException;
 import com.dwteam.atm.security.JwtUtils;
 import com.dwteam.atm.security.TokenDTO;
@@ -29,8 +30,16 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void registration(UserEntity user) {
+        if(userRepository.existsByUserName(user.getUserName())){
+            throw new DuplicateException("this username exist",this.getClass().getName());
+        }
         String sha3Hex = new DigestUtils("SHA3-256").digestAsHex(user.getPassWord());
         user.setPassWord(sha3Hex);
         userRepository.save(user);
+    }
+
+    @Override
+    public void delete(Long id) {
+        userRepository.deleteById(id);
     }
 }

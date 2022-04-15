@@ -16,7 +16,7 @@ public class TransactionController {
     @PutMapping(value = "/register")
     public ResponseEntity<Void> register(@RequestBody TransactionDTO transactionDTO){
 
-        transactionService.save(transactionMapper.toEntity(transactionDTO));
+        transactionService.saveInThisAccount(transactionMapper.toEntity(transactionDTO));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
